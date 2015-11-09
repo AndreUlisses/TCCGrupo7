@@ -29,7 +29,6 @@ public class UsuarioDao {
                 stmt.setString(1, usuario.getNome());
                 stmt.setString(2, usuario.getEmail());
                 stmt.setString(3, usuario.getSenha());
-
                 stmt.executeUpdate();
                 ResultSet rs = stmt.getGeneratedKeys();
 
@@ -45,7 +44,6 @@ public class UsuarioDao {
                 stmt.setString(2, usuario.getEmail());
                 stmt.setString(3, usuario.getSenha());
                 stmt.setInt(4, usuario.getId());
-
                 stmt.executeUpdate();
                 resultado = usuario.getId(); // alterei aqui pra ficar igual ao do ProfessorDAO
             }
