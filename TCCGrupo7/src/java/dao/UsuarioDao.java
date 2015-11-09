@@ -3,6 +3,7 @@ package dao;
 import conexao.ConnectionManager;
 import entidade.Usuario;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -20,15 +21,19 @@ public class UsuarioDao {
             PreparedStatement stmt = null;
             Connection conn = ConnectionManager.getConnection();
 
-            String QUERY_INSERT = "insert into USUARIO (nome, email, senha) values (?, ?, ?)";
-            String QUERY_UPDATE = "update USUARIO set nome = ?, email = ?, senha = ? where idusuario = ? ";
+            String QUERY_INSERT = "insert into USUARIO (nome, data de nascimento, sexo, email, senha) "
+                    + "values (?, ?, ?, ?, ?)";
+            String QUERY_UPDATE = "update USUARIO set nome = ?,data de nascimento = ?, sexo = ?, email = ?, "
+                    + "senha = ? where idusuario = ? ";
 
             if (usuario.getId() == null) {
                 
                 stmt = conn.prepareStatement(QUERY_INSERT, Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, usuario.getNome());
-                stmt.setString(2, usuario.getEmail());
-                stmt.setString(3, usuario.getSenha());
+                stmt.setDate(2, (Date) usuario.getDataNascimento());
+                stmt.setBoolean(3, usuario.isSexo());
+                stmt.setString(4, usuario.getEmail());
+                stmt.setString(5, usuario.getSenha());
                 stmt.executeUpdate();
                 ResultSet rs = stmt.getGeneratedKeys();
 
@@ -41,9 +46,11 @@ public class UsuarioDao {
                 
                 stmt = conn.prepareStatement(QUERY_UPDATE);
                 stmt.setString(1, usuario.getNome());
-                stmt.setString(2, usuario.getEmail());
-                stmt.setString(3, usuario.getSenha());
-                stmt.setInt(4, usuario.getId());
+                stmt.setDate(2, (Date) usuario.getDataNascimento());
+                stmt.setBoolean(3, usuario.isSexo());
+                stmt.setString(4, usuario.getEmail());
+                stmt.setString(5, usuario.getSenha());;
+                stmt.setInt(6, usuario.getId());
                 stmt.executeUpdate();
                 resultado = usuario.getId(); // alterei aqui pra ficar igual ao do ProfessorDAO
             }
@@ -108,6 +115,8 @@ public class UsuarioDao {
                 usuario = new Usuario();
                 usuario.setId(rs.getInt("idUsuario"));
                 usuario.setNome(rs.getString("nome"));
+                usuario.setDataNascimento(rs.getDate("Data de Nascimento"));
+                usuario.setSexo(rs.getBoolean("Sexo"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
             }

@@ -22,6 +22,12 @@ public class UsuarioFacade {
         if ((request.getParameter("txtNome") != null) && (!request.getParameter("txtNome").equals(""))) {
             retorno.setNome(request.getParameter("txtNome"));
         }
+        if ((request.getParameter("txtDataNascimento") != null) && (!request.getParameter("txtDataNascimento").equals(""))){
+            retorno.setDataNascimento(request.getParameter("txtDataNascimento"));
+        }
+        if ((request.getParameter("txtSexo") != null) && (!request.getParameter("txtSexo").equals(""))){
+            retorno.setSexo(request.getParameter("txtSexo"));
+        }
         if ((request.getParameter("txtEmail") != null) && (!request.getParameter("txtEmail").equals(""))) {
             retorno.setEmail(request.getParameter("txtEmail"));
         }
